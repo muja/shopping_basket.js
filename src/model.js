@@ -5,6 +5,13 @@ module.exports = (App) => {
     tableName: 'baskets',
     products: function() {
       return this.belongsToMany(Product, 'basket_products');
+    },
+    add: async function(...productNames) {
+      let products = await Product.where('name', 'in', productNames).fetchAll();
+      let grouped = products.groupBy('name');
+      for ( e of productNames )
+        await this.related('products').attach(grouped[e][0].id);
+      return await this.refresh();
     }
   });
 

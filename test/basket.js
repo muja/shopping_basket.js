@@ -2,16 +2,9 @@ const {App, expect} = require('./test');
 
 const {Basket, Product} = require(App.model)(App);
 
-async function addAllToBasket(basket, times = 1) {
-  let {models} = await Product.fetchAll();
-  for ( e of models )
-    await basket.related('products').attach(Array(times).fill({product_id: e}));
-  return models.length * times;
-}
-
 describe('Basket', function() {
-  beforeEach(function() {
-    this.basket = Basket.forge();
+  beforeEach(async function() {
+    this.basket = await Basket.forge().save();
   });
 
   it('exists', function() {
@@ -19,14 +12,12 @@ describe('Basket', function() {
   });
 
   it('can contain multiple items', async function() {
-    let length = await addAllToBasket(this.basket);
-    await this.basket.refresh();
-    expect(this.basket.related('products')).to.have.length(length);
+    await this.basket.add('Banana', 'Apple', 'Orange', 'Papaya');
+    expect(this.basket.related('products')).to.have.length(4);
   });
 
   it('can contain an item multiple times', async function() {
-    let length = await addAllToBasket(this.basket, 2);
-    await this.basket.refresh();
-    expect(this.basket.related('products')).to.have.length(length);
+    await this.basket.add('Banana', 'Banana', 'Banana');
+    expect(this.basket.related('products')).to.have.length(3);
   });
 });
