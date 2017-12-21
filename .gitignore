@@ -1,4 +1,8 @@
+# .DS_Store on OS X
 .DS_Store
+
+# SQLite db file
+*.sqlite3
 
 # Logs
 logs
