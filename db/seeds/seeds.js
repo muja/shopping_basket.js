@@ -1,4 +1,8 @@
 exports.seed = async function(knex, Promise) {
+  await knex('basket_products').del();
+
+  await knex('baskets').del();
+
   await knex('products').del();
   await knex('products').insert([
     {id: 1, name: 'Apple',  price: 25},
@@ -6,8 +10,6 @@ exports.seed = async function(knex, Promise) {
     {id: 3, name: 'Banana', price: 15},
     {id: 4, name: 'Papaya', price: 50}
   ]);
-
-  await knex('baskets').del();
 
   await knex('offers').del();
   await knex('offers').insert([

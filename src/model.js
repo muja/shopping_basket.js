@@ -2,9 +2,9 @@ module.exports = (App) => {
   const bookshelf = require('./bookshelf')(App);
 
   const Basket = bookshelf.Model.extend({
-    tableName: 'users',
+    tableName: 'baskets',
     products: function() {
-      return this.belongsToMany(Product, basket_products);
+      return this.belongsToMany(Product, 'basket_products');
     }
   });
 
