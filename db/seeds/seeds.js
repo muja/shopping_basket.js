@@ -7,10 +7,7 @@ exports.seed = async function(knex, Promise) {
     {id: 4, name: 'Papaya', price: 50}
   ]);
 
-  await knex('baskets').del()
-  await knex('baskets').insert([
-    {id: 1}
-  ]);
+  await knex('baskets').del();
 
   await knex('offers').del();
   await knex('offers').insert([
