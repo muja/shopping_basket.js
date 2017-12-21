@@ -1,5 +1,10 @@
+const path = require('path');
+
+let approot = path.dirname(__dirname);
+
 const App = {
-  root: require('path').dirname(__dirname),
+  root: approot,
+  model: path.join(approot, "src/model"),
   environment: "test"
 }
 

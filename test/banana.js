@@ -1,6 +1,6 @@
-const {App, expect} = require('./test')
+const {App, expect} = require('./test');
 
-const Product = require('../src/model')(App).Product;
+const {Product} = require(App.model)(App);
 
 describe('Banana', function() {
   beforeEach(async function() {
@@ -14,4 +14,4 @@ describe('Banana', function() {
   it('costs 15', function() {
     expect(this.banana.attributes.price).to.be(15);
   });
-})
+});

@@ -1,6 +1,6 @@
-const {App, expect} = require('./test')
+const {App, expect} = require('./test');
 
-const Product = require('../src/model')(App).Product;
+const {Product} = require(App.model)(App);
 
 function any(coll, f) {
   return coll.reduce((any, e) => any || f(e), false);
@@ -26,4 +26,4 @@ describe('Papaya', function() {
     );
     expect(anyMatchingOffer).to.be(true);
   });
-})
+});
