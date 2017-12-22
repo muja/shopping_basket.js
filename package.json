@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/muja/shopping_basket.git"
+    "url": "git+ssh://git@github.com/muja/shopping_basket.js.git"
   },
   "author": "Danyel Bayraktar <cydrop@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/muja/shopping_basket/issues"
+    "url": "https://github.com/muja/shopping_basket.js/issues"
   },
-  "homepage": "https://github.com/muja/shopping_basket#readme",
+  "homepage": "https://github.com/muja/shopping_basket.js#readme",
   "dependencies": {
     "aigle": "^1.10.0",
     "bookshelf": "^0.12.0",
