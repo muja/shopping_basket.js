@@ -14,10 +14,6 @@ const App = {
   lo: lodash
 };
 
-// const {Basket, Product, Offer} = require('./src/model')(App);
-
-// p._boundTo.models[0].reduced(10)
-
 const cli = require('./src/cli')(App);
 
 cli.launch(path.basename(process.argv[1]), process.argv.slice(2));
