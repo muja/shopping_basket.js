@@ -1,5 +1,5 @@
 module.exports = (App) => {
-  const {Basket} = require('./model')(App);
+  const {Basket} = require(App.model)(App);
 
   return {
     launch: async (name, argv) => {
@@ -11,8 +11,13 @@ module.exports = (App) => {
       await knex.migrate.latest();
       await knex.seed.run();
       basket = await Basket.forge({}).save();
-      await basket.add(...argv);
-      console.log(await basket.receipt());
+      try {
+        await basket.add(...argv);
+        console.log(await basket.receipt());
+      } catch (e) {
+        console.log(String(e));
+        process.exit(1);
+      }
     }
   }
 }

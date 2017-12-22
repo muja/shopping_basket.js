@@ -36,8 +36,13 @@ module.exports = (App) => {
       }
 
       let grouped = products.groupBy('name');
-      for ( let e of all )
-        await this.related('products').attach(grouped[e][0].id);
+      for ( let e of all ){
+        let prod = grouped[e];
+        if ( !prod ) {
+          throw new Error(`Product with name '${e}' does not exist.`);
+        }
+        await this.related('products').attach(prod[0].id);
+      }
       return await this.refresh();
     },
 
