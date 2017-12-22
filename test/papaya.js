@@ -2,9 +2,7 @@ const {App, expect} = require('./test');
 
 const {Product} = require(App.model)(App);
 
-function any(coll, f) {
-  return coll.reduce((any, e) => any || f(e), false);
-}
+const lodash = require('lodash');
 
 describe('Papaya', function() {
   beforeEach(async function() {
@@ -21,7 +19,7 @@ describe('Papaya', function() {
 
   it('offers 3 for the price of 2', function() {
     let offers = this.papaya.related('offers');
-    let anyMatchingOffer = any(offers.models,
+    let anyMatchingOffer = lodash.some(offers.models,
       e => e.attributes.buy_amount == 3 && e.attributes.pay == this.papaya.attributes.price * 2
     );
     expect(anyMatchingOffer).to.be(true);
