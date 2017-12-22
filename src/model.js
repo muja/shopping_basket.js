@@ -1,7 +1,9 @@
 module.exports = (App) => {
   const bookshelf = require('./bookshelf')(App);
 
-  const _ = App._;
+  // _ = asynchronous lodash
+  // lo = synchronous lodash
+  const {_, lo} = App;
 
   const Basket = bookshelf.Model.extend({
     tableName: 'baskets',
@@ -83,6 +85,46 @@ module.exports = (App) => {
     total: async function() {
       let list = await this.list();
       return _.reduce(list, async (sum, e) => sum + (await this.positionTotal(...e)).price, 0);
+    },
+
+    receiptTable: async function() {
+      let list = await this.list();
+      let items = await _.map(list, async e => {
+        let qty = e[0];
+        let attrs = e[1].attributes;
+        let pos = await this.positionTotal(qty, e[1]);
+        return [qty, attrs.name, pos.price, pos.offer ? pos.offer.attributes.description : null];
+      });
+      return items;
+    },
+
+    receipt: async function() {
+      let table = await this.receiptTable();
+
+      // we want column to pad to the right, except for the last one.
+      let pad = [lo.padStart, lo.padStart, lo.padStart, lo.padEnd]
+      table.unshift(["QTY", "ITEM", "TOTAL", "NOTE"]);
+
+      // get max width for each column first
+      let columns = lo.zip(...table);
+      let widths = lo.map(columns,
+        rows => lo.max(lo.map(rows, row => String(row).length))
+      );
+
+      // then pad every column according to max width
+      let positions = lo.map(table, cols =>
+        lo.map(lo.zip(cols, widths), (col, i) =>
+          pad[i](col[0] === null ? '' : String(col[0]), col[1])
+        ).join(" | ")
+      );
+
+      // add a final line below the table that lists the total price
+      let width = positions[0].length;
+      let totalString = "TOTAL: ";
+      let total = lo.padStart(String(await this.total()), width - totalString.length);
+      positions.push(""); // empty line
+      positions.push(totalString + total);
+      return positions.join("\n");
     }
   });
 

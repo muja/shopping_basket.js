@@ -1,0 +1,23 @@
+#!/usr/bin/env node
+
+const path = require('path');
+const _ = require('aigle');
+const lodash = require('lodash');
+_.mixin(lodash);
+
+let approot = __dirname;
+const App = {
+  root: approot,
+  environment: process.env.NODE_ENV || 'development',
+  model: path.join(approot, 'src/model'),
+  _: _,
+  lo: lodash
+};
+
+// const {Basket, Product, Offer} = require('./src/model')(App);
+
+// p._boundTo.models[0].reduced(10)
+
+const cli = require('./src/cli')(App);
+
+cli.launch(path.basename(process.argv[1]), process.argv.slice(2));
