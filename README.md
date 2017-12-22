@@ -1,5 +1,7 @@
 # Shopping basket
 
+[![Travis Build Status](https://travis-ci.org/muja/shopping_basket.js.svg?branch=master)](https://travis-ci.org/muja/shopping_basket.js)
+
 A little shopping basket application.
 
 This app uses bookshelf, knex and sqlite3 to persist data.
