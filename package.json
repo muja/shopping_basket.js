@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/muja/shopping_basket#readme",
   "dependencies": {
+    "aigle": "^1.10.0",
     "bookshelf": "^0.12.0",
     "commander": "^2.12.2",
     "knex": "^0.14.2",
