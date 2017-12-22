@@ -2,14 +2,16 @@ const path = require('path');
 
 let approot = path.dirname(__dirname);
 
+const lodash = require('lodash')
 const _ = require('aigle');
-_.mixin(require('lodash'));
+_.mixin(lodash);
 
 const App = {
   root: approot,
   model: path.join(approot, "src/model"),
   environment: "test",
-  _: _
+  _: _,
+  lo: lodash
 }
 
 const expect = require('expect.js');

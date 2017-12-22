@@ -64,16 +64,19 @@ module.exports = (App) => {
      */
     positionTotal: async function(quantity, product) {
       let offers = await product.related('offers').fetch();
+      let priceWithoutOffer = quantity * product.attributes.price
       if ( offers.length > 0 ) {
         let grouped = await _.map(offers.models, async offer => ({
           offer: offer,
           price: await offer.apply(quantity)
         }));
-        return _.minBy(grouped, e => e.price);
+        let offer = lo.minBy(grouped, e => e.price);
+        if ( offer.price < priceWithoutOffer )
+          return offer;
       }
       return {
         offer: null,
-        price: quantity * product.attributes.price
+        price: priceWithoutOffer
       };
     },
 
