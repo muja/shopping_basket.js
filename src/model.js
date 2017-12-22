@@ -121,12 +121,15 @@ module.exports = (App) => {
         ).join(" | ")
       );
 
+      positions.push(""); // empty line, separate table with total
+
       // add a final line below the table that lists the total price
-      let width = positions[0].length;
-      let totalString = "TOTAL: ";
-      let total = lo.padStart(String(await this.total()), width - totalString.length);
-      positions.push(""); // empty line
-      positions.push(totalString + total);
+
+      // we want the total price to be aligned with the other prices
+      // and not at the end with "NOTE".
+      let width = positions[0].indexOf("TOTAL") + 5;
+
+      positions.push(lo.padStart("TOTAL: " + await this.total(), width));
       return positions.join("\n");
     }
   });
